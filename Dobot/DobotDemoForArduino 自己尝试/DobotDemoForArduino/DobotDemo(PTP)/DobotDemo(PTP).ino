@@ -1,6 +1,3 @@
-//加速度=0？修改dx?手柄阈值？Serial.x注释掉？速率比是什么？loop结构？
-
-
 /****************************************Copyright(c)*****************************************************
 **                            Shenzhen Yuejiang Technology Co., LTD.
 **
@@ -60,6 +57,20 @@ void setup() {
   FlexiTimer2::set(100, Serialread);
   FlexiTimer2::start();
   pinMode(24, INPUT_PULLUP);
+
+    InitRAM();
+
+  ProtocolInit();
+
+  SetJOGJointParams(&gJOGJointParams, true, &gQueuedCmdIndex);
+
+  SetJOGCoordinateParams(&gJOGCoordinateParams, true, &gQueuedCmdIndex);
+
+  SetJOGCommonParams(&gJOGCommonParams, true, &gQueuedCmdIndex);
+
+  SetPTPCoordinateParams(&gPTPCoordinateParams, true, &gQueuedCmdIndex);
+
+  SetPTPCmd(&gPTPCmd, true, &gQueuedCmdIndex);
 }
 
 /*********************************************************************************************************
@@ -140,9 +151,9 @@ void InitRAM(void)
 
 
   //Set PTP Model
-  gPTPCoordinateParams.xyzVelocity = 100;
+  gPTPCoordinateParams.xyzVelocity = 30;
   gPTPCoordinateParams.rVelocity = 100;
-  gPTPCoordinateParams.xyzAcceleration = 80;
+  gPTPCoordinateParams.xyzAcceleration = 800;
   gPTPCoordinateParams.rAcceleration = 80;
 
   gPTPCommonParams.velocityRatio = 50;
@@ -169,59 +180,12 @@ void InitRAM(void)
 
 void loop()
 {
-  InitRAM();
-
-  ProtocolInit();
-
-  SetJOGJointParams(&gJOGJointParams, true, &gQueuedCmdIndex);
-
-  SetJOGCoordinateParams(&gJOGCoordinateParams, true, &gQueuedCmdIndex);
-
-  SetJOGCommonParams(&gJOGCommonParams, true, &gQueuedCmdIndex);
-
-  SetPTPCoordinateParams(&gPTPCoordinateParams, true, &gQueuedCmdIndex);
-
-  /*
-     以下为demo部分
-  */
-
-  printf("\r\n======Enter demo application by LIU======\r\n");
-
-  SetPTPCmd(&gPTPCmd, true, &gQueuedCmdIndex);
   for (; ;)
   {
     static uint32_t timer = millis();//常数，millis会变化
     static uint32_t count = 0;
     static uint32_t timer_move = millis();
     int tempofcount;
-    /*
-       定义了JOG_STICK，则为来回旋转，没有定义的话，则为伸缩模式。
-    */
-    /* #ifdef JOG_STICK
-      if(millis() - timer > 1000)//更加巧妙的延时方式，延时1秒钟//如果定义了JOG_STICK则运行这个，如果没有定义，则运行下面一段//旋转程序
-      {
-
-             gPTPCmd.x += 10;//配置PTP 运动X 坐标+100
-             //运动PTP 运动，坐标为gPTPCmd 结构体里面的坐标
-             SetPTPCmd(&gPTPCmd, true, &gQueuedCmdIndex);
-             printf("  x= %f",gPTPCmd.x);
-             printf("  y= %f",gPTPCmd.y);
-             printf("  z= %f",gPTPCmd.z);
-             printf("  r= %f",gPTPCmd.r);
-             printf("================");
-             //printf("x= %d,y= %d.z= %d,r= %d\n",gPTPCmd.x,gPTPCmd.y,gPTPCmd.z，gPTPCmd.r);
-             delay(1000);
-             gPTPCmd.x -= 10;//配置PTP 运动X 坐标+100
-             //运动PTP 运动，坐标为gPTPCmd 结构体里面的坐标
-             SetPTPCmd(&gPTPCmd, true, &gQueuedCmdIndex);
-             printf("  x= %f",gPTPCmd.x);
-             printf("  y= %f",gPTPCmd.y);
-             printf("  z= %f",gPTPCmd.z);
-             printf("  r= %f",gPTPCmd.r);
-             printf("================");
-             delay(1000);
-      }
-      #else//如果没有定义，则运行下面一段*/
             if(millis() - timer > 100)//伸缩程序
             {
                 timer = millis();
@@ -236,62 +200,30 @@ void loop()
                  Serial.println(valuez, DEC);
                  if(valuex<400)
                  {
-                  gPTPCmd.x += 5;
+                  gPTPCmd.x += 2;
                  }
                  else if(valuex>600)
                  {
-                  gPTPCmd.x -= 5;
+                  gPTPCmd.x -= 2;
                  }
                   if(valuey<400)
                  {
-                  gPTPCmd.y -= 5;
+                  gPTPCmd.y -= 2;
                  }
                  else if(valuey>600)
                  {
-                  gPTPCmd.y += 5;
+                  gPTPCmd.y += 2;
                  }
                   if(valuez==0)
                  {
-                  gPTPCmd.z += 5;
+                  gPTPCmd.z += 2;
                  }
     
-    /*count++;
-      if(count & 0x01)//转化成二进制后进行位运算，把count和0x01按位与。意思是判断count的最低位是否为0.
-      {
-        gPTPCmd.x += 10;//配置PTP 运动X 坐标+100
-        gPTPCmd.y += 10;
-        gPTPCmd.z += 10;
-        //运动PTP 运动，坐标为gPTPCmd 结构体里面的坐标
-        printf("\n==========================================\n");
-        printf("  x= "); Serial.print(gPTPCmd.x);
-        printf("  y= "); Serial.print(gPTPCmd.y);
-        printf("  z= "); Serial.print(gPTPCmd.z);
-        printf("  r= "); Serial.print(gPTPCmd.r);
-        printf("\n==========================================\n");
-        SetPTPCmd(&gPTPCmd, true, &gQueuedCmdIndex);
-        delay(3000);
-      }
-      else
-      {
-        gPTPCmd.x -= 10;
-        gPTPCmd.y -= 10;
-        gPTPCmd.z -= 10;
-        printf("\n==========================================\n");
-        printf("  x= "); Serial.print(gPTPCmd.x);
-        printf("  y= "); Serial.print(gPTPCmd.y);
-        printf("  z= "); Serial.print(gPTPCmd.z);
-        printf("  r= "); Serial.print(gPTPCmd.r);
-        printf("\n==========================================\n");
-        SetPTPCmd(&gPTPCmd, true, &gQueuedCmdIndex);
-        delay(3000);
-      }*/
-  }
           if(millis() - timer_move > 1000)//一次运行时间与下一次运行时间间隔两秒钟
           {
             timer_move = millis();
            SetPTPCmd(&gPTPCmd, true, &gQueuedCmdIndex);
   
-          //#endif
           }
 
   /*
@@ -299,5 +231,6 @@ void loop()
   */
   ProtocolProcess();//Protocol 进程
 }
-}
+  }
+  }
 
