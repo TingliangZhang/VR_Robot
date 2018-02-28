@@ -27,7 +27,7 @@ void setup() {
 }
 
 void loop() {
-
+  
   meetAndroid.receive(); // you need to keep this in your loop() to receive events
 }
 
@@ -55,17 +55,13 @@ void intValue(byte flag, byte numOfValues)
   int v = meetAndroid.getInt();
   meetAndroid.send(v);
   
-  if (0<=v<=180)   
-  { 
-     pos1 = (180-v);
+    if (0<=data[1]<=359)   
+  {
+  
+     pos1 = v/2;
      myservo1.write(pos1);
   }
   
-  if (180<v<=360)   
-  { 
-     pos1 = (360-v);
-     myservo1.write(pos1);
-  }
 }
 
 /*
@@ -89,19 +85,11 @@ void floatValues(byte flag, byte numOfValues)
     meetAndroid.send(data[i]);
   }
 
- if (0<=data[2]<=180)   
+  if (-180<=data[2]<=180)   
   {
-     intdata[2] = int(data[2]); //Cast the X axis float value to int
-     intdata[2] = intdata[2]+5;
-     pos2 = intdata[2];
-     myservo2.write(pos2);
-  }
-
-  if (-180<=data[2]<0)   
-  {
-     intdata[2] = int(data[2]); //Cast the X axis float value to int
-     intdata[2] = -intdata[2]+5;
-     pos2 = intdata[2];
+     intdata[1] = int(data[1]); //Cast the X axis float value to int
+     intdata[1] = intdata[1]+180;
+     pos2 = intdata[1]/2;
      myservo2.write(pos2);
   }
 
