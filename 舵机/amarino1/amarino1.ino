@@ -5,8 +5,8 @@ MeetAndroid meetAndroid;
 float data[3] = {0};
 int intdata[3] = {0};
 int i = 1;
-Servo myservo1; //lower servo
-Servo myservo2; //upper servo
+Servo myservo1; //lower servo pin 10
+Servo myservo2; //upper servo pin 11
 int pos1 = 0;
 int pos2 = 0;
 
