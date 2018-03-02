@@ -352,7 +352,7 @@ bool CMainApplication::BInit()
 
 	// Loading the SteamVR Runtime
 	vr::EVRInitError eError = vr::VRInitError_None;
-	m_pHMD = vr::VR_Init( &eError, vr::VRApplication_Scene );
+	m_pHMD = vr::VR_Init( &eError, vr::VRApplication_Background);
 
 	if ( eError != vr::VRInitError_None )
 	{
@@ -364,60 +364,60 @@ bool CMainApplication::BInit()
 	}
 
 
-	m_pRenderModels = (vr::IVRRenderModels *)vr::VR_GetGenericInterface( vr::IVRRenderModels_Version, &eError );
-	if( !m_pRenderModels )
-	{
-		m_pHMD = NULL;
-		vr::VR_Shutdown();
+	//m_pRenderModels = (vr::IVRRenderModels *)vr::VR_GetGenericInterface( vr::IVRRenderModels_Version, &eError );
+	//if( !m_pRenderModels )
+	//{
+	//	m_pHMD = NULL;
+	//	vr::VR_Shutdown();
 
-		char buf[1024];
-		sprintf_s( buf, sizeof( buf ), "Unable to get render model interface: %s", vr::VR_GetVRInitErrorAsEnglishDescription( eError ) );
-		SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR, "VR_Init Failed", buf, NULL );
-		return false;
-	}
+	//	char buf[1024];
+	//	sprintf_s( buf, sizeof( buf ), "Unable to get render model interface: %s", vr::VR_GetVRInitErrorAsEnglishDescription( eError ) );
+	//	SDL_ShowSimpleMessageBox( SDL_MESSAGEBOX_ERROR, "VR_Init Failed", buf, NULL );
+	//	return false;
+	//}
 
-	int nWindowPosX = 700;
-	int nWindowPosY = 100;
-	Uint32 unWindowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
+	//int nWindowPosX = 700;
+	//int nWindowPosY = 100;
+	//Uint32 unWindowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
-	SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 4 );
-	SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 1 );
-	//SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY );
-	SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
+	//SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 4 );
+	//SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 1 );
+	////SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY );
+	//SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
 
-	SDL_GL_SetAttribute( SDL_GL_MULTISAMPLEBUFFERS, 0 );
-	SDL_GL_SetAttribute( SDL_GL_MULTISAMPLESAMPLES, 0 );
-	if( m_bDebugOpenGL )
-		SDL_GL_SetAttribute( SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG );
+	//SDL_GL_SetAttribute( SDL_GL_MULTISAMPLEBUFFERS, 0 );
+	//SDL_GL_SetAttribute( SDL_GL_MULTISAMPLESAMPLES, 0 );
+	//if( m_bDebugOpenGL )
+	//	SDL_GL_SetAttribute( SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG );
 
-	m_pCompanionWindow = SDL_CreateWindow( "hellovr", nWindowPosX, nWindowPosY, m_nCompanionWindowWidth, m_nCompanionWindowHeight, unWindowFlags );
-	if (m_pCompanionWindow == NULL)
-	{
-		printf( "%s - Window could not be created! SDL Error: %s\n", __FUNCTION__, SDL_GetError() );
-		return false;
-	}
+	//m_pCompanionWindow = SDL_CreateWindow( "hellovr", nWindowPosX, nWindowPosY, m_nCompanionWindowWidth, m_nCompanionWindowHeight, unWindowFlags );
+	//if (m_pCompanionWindow == NULL)
+	//{
+	//	printf( "%s - Window could not be created! SDL Error: %s\n", __FUNCTION__, SDL_GetError() );
+	//	return false;
+	//}
 
-	m_pContext = SDL_GL_CreateContext(m_pCompanionWindow);
-	if (m_pContext == NULL)
-	{
-		printf( "%s - OpenGL context could not be created! SDL Error: %s\n", __FUNCTION__, SDL_GetError() );
-		return false;
-	}
+	//m_pContext = SDL_GL_CreateContext(m_pCompanionWindow);
+	//if (m_pContext == NULL)
+	//{
+	//	printf( "%s - OpenGL context could not be created! SDL Error: %s\n", __FUNCTION__, SDL_GetError() );
+	//	return false;
+	//}
 
-	glewExperimental = GL_TRUE;
-	GLenum nGlewError = glewInit();
-	if (nGlewError != GLEW_OK)
-	{
-		printf( "%s - Error initializing GLEW! %s\n", __FUNCTION__, glewGetErrorString( nGlewError ) );
-		return false;
-	}
-	glGetError(); // to clear the error caused deep in GLEW
+	//glewExperimental = GL_TRUE;
+	//GLenum nGlewError = glewInit();
+	//if (nGlewError != GLEW_OK)
+	//{
+	//	printf( "%s - Error initializing GLEW! %s\n", __FUNCTION__, glewGetErrorString( nGlewError ) );
+	//	return false;
+	//}
+	//glGetError(); // to clear the error caused deep in GLEW
 
-	if ( SDL_GL_SetSwapInterval( m_bVblank ? 1 : 0 ) < 0 )
-	{
-		printf( "%s - Warning: Unable to set VSync! SDL Error: %s\n", __FUNCTION__, SDL_GetError() );
-		return false;
-	}
+	//if ( SDL_GL_SetSwapInterval( m_bVblank ? 1 : 0 ) < 0 )
+	//{
+	//	printf( "%s - Warning: Unable to set VSync! SDL Error: %s\n", __FUNCTION__, SDL_GetError() );
+	//	return false;
+	//}
 
 
 	m_strDriver = "No Driver";
@@ -426,31 +426,31 @@ bool CMainApplication::BInit()
 	m_strDriver = GetTrackedDeviceString( m_pHMD, vr::k_unTrackedDeviceIndex_Hmd, vr::Prop_TrackingSystemName_String );
 	m_strDisplay = GetTrackedDeviceString( m_pHMD, vr::k_unTrackedDeviceIndex_Hmd, vr::Prop_SerialNumber_String );
 
-	std::string strWindowTitle = "hellovr - " + m_strDriver + " " + m_strDisplay;
-	SDL_SetWindowTitle( m_pCompanionWindow, strWindowTitle.c_str() );
+	//std::string strWindowTitle = "hellovr - " + m_strDriver + " " + m_strDisplay;
+	//SDL_SetWindowTitle( m_pCompanionWindow, strWindowTitle.c_str() );
+	//
+	//// cube array
+ //	m_iSceneVolumeWidth = m_iSceneVolumeInit;
+ //	m_iSceneVolumeHeight = m_iSceneVolumeInit;
+ //	m_iSceneVolumeDepth = m_iSceneVolumeInit;
+ //		
+ //	m_fScale = 0.3f;
+ //	m_fScaleSpacing = 4.0f;
+ //
+ //	m_fNearClip = 0.1f;
+ //	m_fFarClip = 30.0f;
+ //
+ //	m_iTexture = 0;
+ //	m_uiVertcount = 0;
+ 
+ 	m_MillisecondsTimer.start(1, this);
+ 	m_SecondsTimer.start(1000, this);
 	
-	// cube array
- 	m_iSceneVolumeWidth = m_iSceneVolumeInit;
- 	m_iSceneVolumeHeight = m_iSceneVolumeInit;
- 	m_iSceneVolumeDepth = m_iSceneVolumeInit;
- 		
- 	m_fScale = 0.3f;
- 	m_fScaleSpacing = 4.0f;
- 
- 	m_fNearClip = 0.1f;
- 	m_fFarClip = 30.0f;
- 
- 	m_iTexture = 0;
- 	m_uiVertcount = 0;
- 
-// 		m_MillisecondsTimer.start(1, this);
-// 		m_SecondsTimer.start(1000, this);
-	
-	if (!BInitGL())
-	{
-		printf("%s - Unable to initialize OpenGL!\n", __FUNCTION__);
-		return false;
-	}
+	//if (!BInitGL())
+	//{
+	//	printf("%s - Unable to initialize OpenGL!\n", __FUNCTION__);
+	//	return false;
+	//}
 
 	if (!BInitCompositor())
 	{
@@ -633,6 +633,8 @@ bool CMainApplication::HandleInput()
 		ProcessVREvent( event );
 	}
 
+	printPositionalData();
+
 	// Process SteamVR controller state
 	for( vr::TrackedDeviceIndex_t unDevice = 0; unDevice < vr::k_unMaxTrackedDeviceCount; unDevice++ )
 	{
@@ -646,6 +648,153 @@ bool CMainApplication::HandleInput()
 	return bRet;
 }
 
+
+//-----------------------------------------------------------------------------
+// Purpose: Prints out position (x,y,z) and rotation (qw,qx,qy,qz) into the console.
+//-----------------------------------------------------------------------------
+void CMainApplication::printPositionalData()
+{
+
+	// Process SteamVR device states
+	for (vr::TrackedDeviceIndex_t unDevice = 0; unDevice < vr::k_unMaxTrackedDeviceCount; unDevice++)
+	{
+		if (!m_pHMD->IsTrackedDeviceConnected(unDevice))
+			continue;
+
+		vr::VRControllerState_t state;
+		if (m_pHMD->GetControllerState(unDevice, &state, sizeof(state)))
+		{
+			vr::TrackedDevicePose_t trackedDevicePose;
+			vr::TrackedDevicePose_t trackedControllerPose;
+			vr::VRControllerState_t controllerState;
+			vr::HmdMatrix34_t poseMatrix;
+			vr::HmdVector3_t position;
+			vr::HmdQuaternion_t quaternion;
+			vr::ETrackedDeviceClass trackedDeviceClass = vr::VRSystem()->GetTrackedDeviceClass(unDevice);
+
+			switch (trackedDeviceClass) {
+			case vr::ETrackedDeviceClass::TrackedDeviceClass_HMD:
+				vr::VRSystem()->GetDeviceToAbsoluteTrackingPose(vr::TrackingUniverseStanding, 0, &trackedDevicePose, 1);
+				// print positiona data for the HMD.
+				poseMatrix = trackedDevicePose.mDeviceToAbsoluteTracking; // This matrix contains all positional and rotational data.
+				position = GetPosition(trackedDevicePose.mDeviceToAbsoluteTracking);
+				quaternion = GetRotation(trackedDevicePose.mDeviceToAbsoluteTracking);
+
+				printDevicePositionalData("HMD", poseMatrix, position, quaternion);
+
+				break;
+
+			case vr::ETrackedDeviceClass::TrackedDeviceClass_GenericTracker:
+				vr::VRSystem()->GetDeviceToAbsoluteTrackingPose(vr::TrackingUniverseStanding, 0, &trackedDevicePose, 1);
+				// print positiona data for a general vive tracker.
+				break;
+
+			case vr::ETrackedDeviceClass::TrackedDeviceClass_Controller:
+				vr::VRSystem()->GetControllerStateWithPose(vr::TrackingUniverseStanding, unDevice, &controllerState,
+					sizeof(controllerState), &trackedControllerPose);
+				poseMatrix = trackedControllerPose.mDeviceToAbsoluteTracking; // This matrix contains all positional and rotational data.
+				position = GetPosition(trackedControllerPose.mDeviceToAbsoluteTracking);
+				quaternion = GetRotation(trackedControllerPose.mDeviceToAbsoluteTracking);
+
+				auto trackedControllerRole = vr::VRSystem()->GetControllerRoleForTrackedDeviceIndex(unDevice);
+				std::string whichHand = "";
+				if (trackedControllerRole == vr::TrackedControllerRole_LeftHand)
+				{
+					whichHand = "LeftHand";
+				}
+				else if (trackedControllerRole == vr::TrackedControllerRole_RightHand)
+				{
+					whichHand = "RightHand";
+				}
+
+				switch (trackedControllerRole)
+				{
+				case vr::TrackedControllerRole_Invalid:
+					// invalid
+					break;
+
+				case vr::TrackedControllerRole_LeftHand:
+				case vr::TrackedControllerRole_RightHand:
+					printDevicePositionalData(whichHand.c_str(), poseMatrix, position, quaternion);
+
+					break;
+				}
+
+				break;
+			}
+
+		}
+	}
+
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Calculates quaternion (qw,qx,qy,qz) representing the rotation
+// from: https://github.com/Omnifinity/OpenVR-Tracking-Example/blob/master/HTC%20Lighthouse%20Tracking%20Example/LighthouseTracking.cpp
+//-----------------------------------------------------------------------------
+
+vr::HmdQuaternion_t CMainApplication::GetRotation(vr::HmdMatrix34_t matrix) {
+	vr::HmdQuaternion_t q;
+
+	q.w = sqrt(fmax(0, 1 + matrix.m[0][0] + matrix.m[1][1] + matrix.m[2][2])) / 2;
+	q.x = sqrt(fmax(0, 1 + matrix.m[0][0] - matrix.m[1][1] - matrix.m[2][2])) / 2;
+	q.y = sqrt(fmax(0, 1 - matrix.m[0][0] + matrix.m[1][1] - matrix.m[2][2])) / 2;
+	q.z = sqrt(fmax(0, 1 - matrix.m[0][0] - matrix.m[1][1] + matrix.m[2][2])) / 2;
+	q.x = copysign(q.x, matrix.m[2][1] - matrix.m[1][2]);
+	q.y = copysign(q.y, matrix.m[0][2] - matrix.m[2][0]);
+	q.z = copysign(q.z, matrix.m[1][0] - matrix.m[0][1]);
+	return q;
+}
+//-----------------------------------------------------------------------------
+// Purpose: Extracts position (x,y,z).
+// from: https://github.com/Omnifinity/OpenVR-Tracking-Example/blob/master/HTC%20Lighthouse%20Tracking%20Example/LighthouseTracking.cpp
+//-----------------------------------------------------------------------------
+
+vr::HmdVector3_t CMainApplication::GetPosition(vr::HmdMatrix34_t matrix) {
+	vr::HmdVector3_t vector;
+
+	vector.v[0] = matrix.m[0][3];
+	vector.v[1] = matrix.m[1][3];
+	vector.v[2] = matrix.m[2][3];
+
+	return vector;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Prints the timestamped data in proper format(x,y,z).
+//-----------------------------------------------------------------------------
+
+void CMainApplication::printDevicePositionalData(const char * deviceName, vr::HmdMatrix34_t posMatrix, vr::HmdVector3_t position, vr::HmdQuaternion_t quaternion)
+{
+	LARGE_INTEGER qpc; // Query Performance Counter for Acquiring high-resolution time stamps.
+					   // From MSDN: "QPC is typically the best method to use to time-stamp events and 
+					   // measure small time intervals that occur on the same system or virtual machine.
+	QueryPerformanceCounter(&qpc);
+
+	// Print position and quaternion (rotation).
+	dprintf("\n%lld, %s, x = %.5f, y = %.5f, z = %.5f, qw = %.5f, qx = %.5f, qy = %.5f, qz = %.5f",
+		qpc.QuadPart, deviceName,
+		position.v[0], position.v[1], position.v[2],
+		quaternion.w, quaternion.x, quaternion.y, quaternion.z);
+
+
+	// Uncomment this if you want to print entire transform matrix that contains both position and rotation matrix.
+	//dprintf("\n%lld,%s,%.5f,%.5f,%.5f,x: %.5f,%.5f,%.5f,%.5f,y: %.5f,%.5f,%.5f,%.5f,z: %.5f,qw: %.5f,qx: %.5f,qy: %.5f,qz: %.5f",
+	//    qpc.QuadPart, whichHand.c_str(),
+	//    posMatrix.m[0][0], posMatrix.m[0][1], posMatrix.m[0][2], posMatrix.m[0][3],
+	//    posMatrix.m[1][0], posMatrix.m[1][1], posMatrix.m[1][2], posMatrix.m[1][3],
+	//    posMatrix.m[2][0], posMatrix.m[2][1], posMatrix.m[2][2], posMatrix.m[2][3],
+	//    quaternion.w, quaternion.x, quaternion.y, quaternion.z);
+
+}
+
+
+
+
+
+
+
+
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -653,17 +802,17 @@ void CMainApplication::RunMainLoop()
 {
 	bool bQuit = false;
 
-	SDL_StartTextInput();
-	SDL_ShowCursor( SDL_DISABLE );
+	//SDL_StartTextInput();
+	//SDL_ShowCursor( SDL_DISABLE );
 
 	while ( !bQuit )
 	{
 		bQuit = HandleInput();
 
-		RenderFrame();
+		//RenderFrame();
 	}
 
-	SDL_StopTextInput();
+	//SDL_StopTextInput();
 }
 
 
@@ -676,7 +825,7 @@ void CMainApplication::ProcessVREvent( const vr::VREvent_t & event )
 	{
 	case vr::VREvent_TrackedDeviceActivated:
 		{
-			SetupRenderModelForTrackedDevice( event.trackedDeviceIndex );
+			//SetupRenderModelForTrackedDevice( event.trackedDeviceIndex );
 			dprintf( "Device %u attached. Setting up render model.\n", event.trackedDeviceIndex );
 		}
 		break;
