@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"  
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="250dp"
+         android:background="#BFBFBF"
+        android:layout_centerInParent="true" >
+<!--  android:background="@drawable/bg3"  -->
+        
+        <ListView
+            android:id="@+id/listdevice"
+            android:layout_width="250dp"
+            android:layout_height="120dp"
+            android:layout_above="@+id/cancelbut"
+            android:layout_below="@+id/textView1"
+            android:layout_centerHorizontal="true"
+            android:cacheColorHint="#000000" >
+
+        </ListView>
+      
+        
+        <Button
+            android:id="@+id/cancelbut"
+            android:layout_width="140dp"
+            android:layout_marginBottom="8dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="Cancel" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/listdevice"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="22dp"
+            android:text="选择要连接的设备："
+            android:textSize="20dp" />
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView1"
+            android:layout_alignTop="@+id/textView1"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@+id/cancelbut" />
+        
+    </RelativeLayout>
+
+    
+</RelativeLayout>

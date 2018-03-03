@@ -1,0 +1,151 @@
+﻿<Window x:Class="DobotClientDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Dobot Demo" Height="350" Width="620" Closed="Window_Closed"
+         ResizeMode="NoResize" Loaded="Window_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="112" />
+            <RowDefinition Height="28" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.Row="0" Header="Jog" HorizontalAlignment="Left" VerticalAlignment="Top" Width="490">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="0">
+                    <ComboBox VerticalAlignment="Center" HorizontalAlignment="Left" Width="100" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged" Tag="mode">
+                        <ComboBoxItem>Linear</ComboBoxItem>
+                        <ComboBoxItem>Axis</ComboBoxItem>
+                    </ComboBox>
+                    <TextBlock Text="velocityRatio" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                    <Slider x:Name="sld" VerticalAlignment="Center" HorizontalAlignment="Left" Width="200" Margin="10,0,0,0" Maximum="100" SmallChange="1" Value="{Binding Path=Text,ElementName=value}" IsSnapToTickEnabled="True"/>
+                    <TextBox x:Name="value" Width="60" Height="30" FontSize="12" Text="{Binding Path=Value, ElementName=sld}" HorizontalAlignment="Center" IsReadOnly="True"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <Button x:Name="XI" Content="X+"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="78" Margin="32,0,0,0" PreviewMouseDown="OnEvent" PreviewMouseUp="OnEvent"/>
+                    <Button x:Name="YI" Content="Y+"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="78" Margin="32,0,0,0" PreviewMouseDown="OnEvent" PreviewMouseUp="OnEvent"/>
+                    <Button x:Name="ZI" Content="Z+"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="78" Margin="32,0,0,0" PreviewMouseDown="OnEvent" PreviewMouseUp="OnEvent"/>
+                    <Button x:Name="RI" Content="R+"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="78" Margin="32,0,0,0" PreviewMouseDown="OnEvent" PreviewMouseUp="OnEvent"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    <Button x:Name="XN" Content="X-"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="78" Margin="32,0,0,0" PreviewMouseDown="OnEvent" PreviewMouseUp="OnEvent"/>
+                    <Button x:Name="YN" Content="Y-"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="78" Margin="32,0,0,0" PreviewMouseDown="OnEvent" PreviewMouseUp="OnEvent"/>
+                    <Button x:Name="ZN" Content="Z-"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="78" Margin="32,0,0,0" PreviewMouseDown="OnEvent" PreviewMouseUp="OnEvent"/>
+                    <Button x:Name="RN" Content="R-"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="78" Margin="32,0,0,0" PreviewMouseDown="OnEvent" PreviewMouseUp="OnEvent"/>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="EndType" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0" Width="107" Margin="0 0 3 0">
+            <StackPanel>
+                
+                <ComboBox VerticalAlignment="Center" HorizontalAlignment="Left" Width="90" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged" Tag="headType">
+                    <ComboBoxItem>SuctionCup</ComboBoxItem>
+                    <ComboBoxItem>Gripper</ComboBoxItem>
+                    <ComboBoxItem>Laser</ComboBoxItem>
+                </ComboBox>
+                
+                <StackPanel Orientation="Vertical">
+                    <CheckBox x:Name="cbGrab" IsEnabled="False" Content="Grab" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3 0 0 0" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+                    <CheckBox x:Name="cbLaser" IsEnabled="False" Content="Laser" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3 0 0 0" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+                    <CheckBox x:Name="cbSuctionCup" IsEnabled="True" Content="SuctionCup" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3 0 0 0" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <TextBlock Text="Joint1Angle:" VerticalAlignment="Center" Margin="4,3,0,0"/>
+            <Border BorderThickness="1" BorderBrush="Black" Height="23" Background="Lime" Margin="4,3,0,0">
+                <TextBlock x:Name="tbJoint1Angle" Width="70" Text="" VerticalAlignment="Center" />
+            </Border>
+
+            <TextBlock Text="Joint2Angle:" VerticalAlignment="Center" Margin="4 3 0 0"/>
+            <Border BorderThickness="1" BorderBrush="Black" Height="23" Background="Lime" Margin="4,3,0,0">
+                <TextBlock x:Name="tbJoint2Angle" Width="70" Text="" VerticalAlignment="Center" />
+            </Border>
+
+            <TextBlock Text="Joint3Angle:" VerticalAlignment="Center" Margin="4 3 0 0"/>
+            <Border BorderThickness="1" BorderBrush="Black" Height="23" Background="Lime" Margin="4,3,0,0">
+                <TextBlock x:Name="tbJoint3Angle" Width="70" Text="" VerticalAlignment="Center" />
+            </Border>
+
+            <TextBlock Text="Joint4Angle:" VerticalAlignment="Center" Margin="4 3 0 0"/>
+            <Border BorderThickness="1" BorderBrush="Black" Height="23" Background="Lime" Margin="4,3,0,0">
+                <TextBlock x:Name="tbJoint4Angle" Width="70" Text="" VerticalAlignment="Center" />
+            </Border>
+        </StackPanel>
+
+        <GroupBox Grid.Row="2" Header="Playback">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="25" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="0">
+                    <TextBlock Width="56" Height="18" Text="Motion" VerticalAlignment="Center"  Margin="4,0,0,0" HorizontalAlignment="Center" TextAlignment="Center"/>
+                    <TextBlock Width="72" Height="18" Text="IsGrab" VerticalAlignment="Center"  Margin="4,0,0,0" HorizontalAlignment="Center" TextAlignment="Center"/>
+                    <TextBlock Width="72" Height="18" Text="X" VerticalAlignment="Center"  Margin="4,0,0,0" HorizontalAlignment="Center" TextAlignment="Center"/>
+                    <TextBlock Width="72" Height="18" Text="Y" VerticalAlignment="Center"  Margin="4,0,0,0" HorizontalAlignment="Center" TextAlignment="Center"/>
+                    <TextBlock Width="72" Height="18" Text="Z" VerticalAlignment="Center"  Margin="4,0,0,0" HorizontalAlignment="Center" TextAlignment="Center"/>
+                    <TextBlock Width="72" Height="18" Text="rHead" VerticalAlignment="Center"  Margin="4,0,0,0" HorizontalAlignment="Center" TextAlignment="Center"/>
+                    <TextBlock Width="72" Height="18" Text="Gripper" VerticalAlignment="Center"  Margin="4,0,0,0" HorizontalAlignment="Center" TextAlignment="Center"/>
+                    <TextBlock Width="72" Height="18" Text="PauseTime" VerticalAlignment="Center"  Margin="4,0,0,0" HorizontalAlignment="Center" TextAlignment="Center"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="1">
+                    <ComboBox Width="62" SelectedIndex="0" x:Name="modeStyle">
+                        <ComboBoxItem>PTPJUMPXYZMode</ComboBoxItem>
+                        <ComboBoxItem>PTPMOVJXYZMode</ComboBoxItem>
+                        <ComboBoxItem>PTPMOVLXYZMode</ComboBoxItem>
+
+                        <ComboBoxItem>PTPJUMPANGLEMode</ComboBoxItem>
+                        <ComboBoxItem>PTPMOVJANGLEMode</ComboBoxItem>
+                        <ComboBoxItem>PTPMOVLANGLEMode</ComboBoxItem>
+
+                        <ComboBoxItem>PTPMOVJXYZINCMode</ComboBoxItem>
+                        <ComboBoxItem>PTPMOVLXYZINCMode</ComboBoxItem>
+                    </ComboBox>
+                    <CheckBox x:Name="isGrab" IsChecked="False" VerticalAlignment="Center"  Margin="30,0,35,0" BorderBrush="Black"/>
+                    <TextBox x:Name="X" Width="72" Text="" VerticalAlignment="Center"   Margin="4,0,0,0" BorderBrush="Black"/>
+                    <TextBox x:Name="Y" Width="72" Text="" VerticalAlignment="Center"   Margin="4,0,0,0" BorderBrush="Black"/>
+                    <TextBox x:Name="Z" Width="72" Text="" VerticalAlignment="Center"   Margin="4,0,0,0" BorderBrush="Black"/>
+                    <TextBox x:Name="rHead" Width="72" Text="" VerticalAlignment="Center"  Margin="4,0,0,0" BorderBrush="Black"/>
+                    <TextBox x:Name="isGripper" Width="72" Text="0" VerticalAlignment="Center" Margin="4,0,0,0" BorderBrush="Black"/>
+                    <TextBox x:Name="pauseTime" Width="72" Text="" VerticalAlignment="Center"  Margin="4,0,0,0" BorderBrush="Black"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    <Button Content="SendCPCmd" Width="150" Height="40" FontSize="24" Click="ProcessEvt" Margin="90 0 0 0"/>
+                    <Button Content="SendPlaybackCmd" Width="150" Height="40" FontSize="24" Click="ProcessEvt" Margin="40 0 0 0"/>
+                    <CheckBox  x:Name="sync" Grid.Row="2" Content="Snchronous Data" Margin="10 20 0 0" Width="120"/>
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal" Grid.Row="3">
+                    <TextBlock Text="velocityRatio" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                    <Slider x:Name="sld1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="130" Margin="10,0,0,0" Maximum="100" SmallChange="1" Value="{Binding Path=Text,ElementName=value1}" IsSnapToTickEnabled="True"/>
+                    <TextBox x:Name="value1" Width="60" Height="30" FontSize="12" Text="{Binding Path=Value, ElementName=sld1}" HorizontalAlignment="Center" IsReadOnly="True"/>
+
+                    <TextBlock Text="AccelerationRatio" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                    <Slider x:Name="sldAcc" VerticalAlignment="Center" HorizontalAlignment="Left" Width="130" Margin="10,0,0,0" Maximum="100" SmallChange="1" Value="{Binding Path=Text,ElementName=valueAcc}" IsSnapToTickEnabled="True"/>
+                    <TextBox x:Name="valueAcc" Width="60" Height="30" FontSize="12" Text="{Binding Path=Value, ElementName=sldAcc}" HorizontalAlignment="Center" IsReadOnly="True"/>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+
+        <Canvas Grid.Row="3">
+            <TextBlock  TextWrapping="Wrap" Text="Tip：" Margin="10 8 0 0" Canvas.Left="0"/>
+            <Label x:Name="lbTip" Content="" Canvas.Left="72" Canvas.Top="3" FontWeight="Bold"/>
+        </Canvas>
+    </Grid>
+</Window>
