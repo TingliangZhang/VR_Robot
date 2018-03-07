@@ -150,11 +150,11 @@ static void PacketWriteProcess(ProtocolHandler *protocolHandler)
             RingBufferDequeue(txPacketQueue, 0);
 
             #if 1
-            printf("Tx Packet: ");
-
-            printf("Packet header:%02x %02x, id:%d, ctrl:%02x, payloadLen:%d\r\n", packet->header.syncBytes[0],
-                    packet->header.syncBytes[1],packet->payload.id, packet->payload.ctrl, packet->header.payloadLen);
-            printf("params: ");
+//            printf("Tx Packet: ");
+//
+//            printf("Packet header:%02x %02x, id:%d, ctrl:%02x, payloadLen:%d\r\n", packet->header.syncBytes[0],
+//                    packet->header.syncBytes[1],packet->payload.id, packet->payload.ctrl, packet->header.payloadLen);
+//            printf("params: ");
             for(int i=0; i<packet->header.payloadLen-2; i++)
             {
                 printf("%02x ", packet->payload.params[i]);

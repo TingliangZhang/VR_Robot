@@ -42,7 +42,7 @@
     //#define JOG_STICK
     
     
-    int valuex, valuey, valuez, xflag, yflag , zflag, flag, value = 0;
+    int valuex, valuey, valuez, valueflag, xflag, yflag , zflag, flag, value = 0;
     
     /*********************************************************************************************************
     ** Global parameters
@@ -284,14 +284,21 @@
           valuez = rc3_val - 1000;
           Serial.print(" | Z: ");
           Serial.println(valuez, DEC);
-    
-//          if (abs(valuez - zflag) > 50)
-//          {
-//            gPTPCmd.z = int(valuez)/10;
-//            SetPTPCmd(&gPTPCmd, false, &gQueuedCmdIndex);
-//            zflag = valuez;
-//          }
-    
+          valueflag = rc4_val - 1000;
+          Serial.print(" | FLAG: ");
+          Serial.println(valueflag, DEC);
+          
+    if(rc4_val>1800)
+    {
+          if (abs(valuez - zflag) > 40)
+          {
+            gPTPCmd.z = int(valuez)/5;
+            SetPTPCmd(&gPTPCmd, false, &gQueuedCmdIndex);
+            zflag = valuez;
+          }
+    }
+    else
+    {
     
           if (abs(valuex - xflag) > 50)
           {
@@ -333,24 +340,6 @@
             value++;
           }
 
-         if (abs(valuez - zflag) > 50)
-          {
-            if (valuez < 400)
-            {
-              gJOGCoordinateParams.velocity[2] = (400 - valuez+50) / 2;
-              gJOGCmd.cmd = CP_DOWN;
-              zflag = valuez;
-            }
-            else if (valuez > 600)
-            {
-              gJOGCoordinateParams.velocity[2] = (valuez - 600 + 50) / 2;
-              gJOGCmd.cmd = CN_DOWN;
-              zflag = valuez;
-            }
-            value++;
-          }
-
-    
           if (value != 0)
           {
          SetJOGCoordinateParams(&gJOGCoordinateParams, true, &gQueuedCmdIndex);
@@ -358,7 +347,7 @@
     
           }
     
-    
+    }
           ProtocolProcess();
         }
       }
