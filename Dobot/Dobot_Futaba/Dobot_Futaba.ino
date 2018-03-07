@@ -275,10 +275,10 @@
         {
     
           timer = millis();
-          valuex = rc1_val - 1000;
+          valuex = rc2_val - 1000;
           Serial.print("X: ");
           Serial.print(valuex, DEC);
-          valuey = rc2_val - 1000;
+          valuey = rc1_val - 1000;
           Serial.print(" | Y: ");
           Serial.print(valuey, DEC);
           valuez = rc3_val - 1000;
@@ -292,7 +292,7 @@
     {
           if (abs(valuez - zflag) > 40)
           {
-            gPTPCmd.z = int(valuez)/5;
+            gPTPCmd.z = valuez/5;
             SetPTPCmd(&gPTPCmd, false, &gQueuedCmdIndex);
             zflag = valuez;
           }
