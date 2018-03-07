@@ -72,15 +72,15 @@ void ProtocolProcess(void)
         if(MessageRead(&gSerialProtocolHandler, &message)==ProtocolNoError){
             #if 1
             //打印接收到的返回数据
-            printf("Rx message: ");
-            printf("message id:%d, rw:%d, isQueued:%d, paramsLen:%d\r\n",
-                    message.id, message.rw, message.isQueued, message.paramsLen);
-            printf("params: ");
-            for(int i=0; i<message.paramsLen; i++)
-            {
-                printf("%02x ", message.params[i]);
-            }
-            printf("\r\n");
+//            printf("Rx message: ");
+//            printf("message id:%d, rw:%d, isQueued:%d, paramsLen:%d\r\n",
+//                    message.id, message.rw, message.isQueued, message.paramsLen);
+//            printf("params: ");
+//            for(int i=0; i<message.paramsLen; i++)
+//            {
+//                printf("%02x ", message.params[i]);
+//            }
+//            printf("\r\n");
             #endif
         }
     }
