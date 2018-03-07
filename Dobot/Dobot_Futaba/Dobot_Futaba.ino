@@ -68,6 +68,9 @@
     ** Returned value:      none
     *********************************************************************************************************/
     void setup() {
+
+      //gas
+      pinMode(22, OUTPUT);
     
       //PPM inputs from RC receiver
       pinMode(ppm1, INPUT);
@@ -289,16 +292,28 @@
           Serial.println(valueflag, DEC);
           
     if(rc4_val>1800)
-    {
-          if (abs(valuez - zflag) > 40)
-          {
-            gPTPCmd.z = valuez/5;
-            SetPTPCmd(&gPTPCmd, false, &gQueuedCmdIndex);
-            zflag = valuez;
-          }
-    }
+    digitalWrite(22, HIGH); 
     else
-    {
+    digitalWrite(22, LOW); 
+    
+
+          if (abs(valuez - zflag) > 50)
+          {
+            if (valuez < 400)
+            {
+              gJOGCoordinateParams.velocity[2] = (400 - valuez+50) * 2;
+              gJOGCmd.cmd = CN_DOWN;
+              zflag = valuez;
+            }
+            else if (valuez > 600)
+            {
+              gJOGCoordinateParams.velocity[2] = (valuez - 600 + 50) * 2;
+              gJOGCmd.cmd = CP_DOWN;
+              zflag = valuez;
+            }
+            value++;
+          }
+
     
           if (abs(valuex - xflag) > 50)
           {
@@ -334,7 +349,7 @@
             value++;
           }
           
-          if (valuex < 600 && valuex > 400 && valuey < 600 && valuey > 400)
+          if (valuex < 600 && valuex > 400 && valuey < 600 && valuey > 400&& valuez < 600 && valuez > 400)
           {
             gJOGCmd.cmd = IDEL;
             value++;
@@ -347,7 +362,6 @@
     
           }
     
-    }
           ProtocolProcess();
         }
       }
