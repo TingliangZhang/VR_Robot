@@ -4,30 +4,13 @@
 \contentsline {section}{\numberline {1.3}表格样本}{2}{section.1.3}
 \contentsline {subsection}{\numberline {1.3.1}基本表格}{2}{subsection.1.3.1}
 \contentsline {subsection}{\numberline {1.3.2}复杂表格}{3}{subsection.1.3.2}
-\contentsline {subsection}{\numberline {1.3.3}其它}{7}{subsection.1.3.3}
-\contentsline {section}{\numberline {1.4}定理环境}{8}{section.1.4}
-\contentsline {section}{\numberline {1.5}参考文献}{11}{section.1.5}
-\contentsline {section}{\numberline {1.6}公式}{12}{section.1.6}
-\contentsline {chapter}{\numberline {第2章}中华人民共和国}{14}{chapter.2}
-\contentsline {section}{\numberline {2.1}其它例子}{14}{section.2.1}
-\contentsline {subsection}{\numberline {2.1.1}绘图}{14}{subsection.2.1.1}
-\contentsline {subsection}{\numberline {2.1.2}插图}{14}{subsection.2.1.2}
-\contentsline {subsubsection}{\numberline {2.1.2.1}一个图形}{14}{subsubsection.2.1.2.1}
-\contentsline {subsubsection}{\numberline {2.1.2.2}多个图形}{15}{subsubsection.2.1.2.2}
-\contentsline {chapter}{插图索引}{17}{section*.20}
-\contentsline {chapter}{表格索引}{18}{section*.22}
-\contentsline {chapter}{公式索引}{19}{section*.24}
-\contentsline {chapter}{致\hspace {1em}谢}{20}{section*.26}
-\contentsline {chapter}{声\hspace {1em}明}{21}{section*.28}
-\contentsline {chapter}{\numberline {附录 A}外文资料原文}{22}{appendix.A}
-\contentsline {section}{\numberline {A.1}Single-Objective Programming}{22}{section.A.1}
-\contentsline {subsection}{\numberline {A.1.1}Linear Programming}{23}{subsection.A.1.1}
-\contentsline {subsection}{\numberline {A.1.2}Nonlinear Programming}{24}{subsection.A.1.2}
-\contentsline {subsection}{\numberline {A.1.3}Integer Programming}{25}{subsection.A.1.3}
-\contentsline {chapter}{\numberline {附录 B}外文资料的调研阅读报告或书面翻译}{26}{appendix.B}
-\contentsline {section}{\numberline {B.1}单目标规划}{26}{section.B.1}
-\contentsline {subsection}{\numberline {B.1.1}线性规划}{26}{subsection.B.1.1}
-\contentsline {subsection}{\numberline {B.1.2}非线性规划}{27}{subsection.B.1.2}
-\contentsline {subsection}{\numberline {B.1.3}整数规划}{27}{subsection.B.1.3}
-\contentsline {chapter}{\numberline {附录 C}其它附录}{29}{appendix.C}
-\contentsline {chapter}{在学期间参加课题的研究成果}{30}{section*.38}
+\contentsline {subsection}{\numberline {1.3.3}其它}{6}{subsection.1.3.3}
+\contentsline {section}{\numberline {1.4}定理环境}{7}{section.1.4}
+\contentsline {section}{\numberline {1.5}参考文献}{10}{section.1.5}
+\contentsline {section}{\numberline {1.6}公式}{11}{section.1.6}
+\contentsline {chapter}{\numberline {第2章}中华人民共和国}{13}{chapter.2}
+\contentsline {section}{\numberline {2.1}其它例子}{13}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}绘图}{13}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}插图}{13}{subsection.2.1.2}
+\contentsline {subsubsection}{\numberline {2.1.2.1}一个图形}{13}{subsubsection.2.1.2.1}
+\contentsline {subsubsection}{\numberline {2.1.2.2}多个图形}{14}{subsubsection.2.1.2.2}
